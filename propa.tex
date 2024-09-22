@@ -2,26 +2,214 @@
 
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{multicol}
+% \usepackage{esvect}
+\usepackage{physics}
+\usepackage{parskip}
+
+% Bold vectors
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\makeatletter
+\newcommand{\vv}[2][]{
+    \@ifempty{#1}{\vec{#2}}{\vec{#2}_{#1}}
+}
+\makeatother
 
 \title{Apuntes de Propagación de Ondas}
 \author{Javier Rodrigo López}
 \date{\today}
  
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+% \renewcommand{\arraystretch}{1.2}
 \maketitle
 
 % Table of contents
 \tableofcontents
 
+\newpage
 \section*{Introducción}
 
-El primer parcial incluye los temas 1 a 4. El segundo parcial incluye los temas 5 a 9.
+El primer parcial incluye los temas 1 a 4. El segundo parcial incluye los temas 5 a 9. Se debe obtener una nota mínima de 3 en cada uno y la media debe ser mayor o igual a 5. Ambos parciales ponderan un 50\% en la nota final. Se puede optar a evaluación final en lugar del segundo parcial.
+
+\subsection*{Fechas de examen}
+
+\begin{description}
+    \item [Primer parcial] 13 de noviembre
+    \item [Segundo parcial o global] 20 de enero
+\end{description}
+
+\subsection*{Ejercicios propuestos}
+Hay que hacer los ejercicios propuestos antes de que el profesor los resuelva en clase. Los que serán resueltos en clase son los siguientes:
+\begin{multicols}{5}
+    \begin{itemize}
+        \item 1.3
+        \item 1.6
+        \item 2.1
+        \item 2.4
+        \item 3.5
+        \item 4.3
+        \item 4.5
+        \item 5.3
+        \item 5.7
+        \item 6.3
+        \item 6.7
+        \item 7.3
+        \item 7.5
+        \item 8.2
+        \item 8.4
+        \item 9.2
+        \item 9.10
+    \end{itemize}
+\end{multicols}
+
+\newpage
+\section{Herramientas: operadores vectoriales}
+
+Una \textbf{función de onda} es una función en el espacio y el tiempo que describe el comportamiento de una onda.
+
+El sistema de referencia será siempre un triedro orientado a derechas, de modo que se cumpla:
+\begin{equation} \label{eq:triedro}
+    \begin{split}
+        \vv[x]{u} + \vv[1]{x} \cp \vv[y]{u} = + \vv[z]{u} \\
+        \vv[y]{u} \cp \vv[x]{u} = - \vv[z]{u} 
+    \end{split}
+\end{equation}
+
+Las \textbf{coordenadas} de un punto representan la posición de ese punto en el espacio.
+
+Una \textbf{superficie coordenada} es una superficie que se define por una ecuación de la forma $f(x, y, z) = \text{cte.}$
+
+El vector posición de un punto $P$ en el espacio se denota como $\vv{r}$, y se puede expresar en función de las coordenadas del punto (diferente en cada sistema de coordenadas).
+
+\subsection{Sistemas de coordenadas}
+\subsubsection{Coordenadas cartesianas}
+
+Recomendables para problemas con \textbf{simetría plana}. Los valores que pueden tomar las coordenadas son:
+\begin{equation}
+    \begin{aligned}
+        x \in (-\infty, +\infty) \\
+        y \in (-\infty, +\infty) \\
+        z \in (-\infty, +\infty)
+    \end{aligned}
+\end{equation}
+
+\begin{itemize}
+    \item La coordenada $x$ es la distancia del punto a la superficie $yz$.
+    \item La coordenada $y$ es la distancia del punto a la superficie $xz$.
+    \item La coordenada $z$ es la distancia del punto a la superficie $xy$.
+\end{itemize}
+
+Cualquier vector puede expresarse como combinación lineal de los vectores unitarios.En cualquier sistema de coordenadas, los vectores unitarios tienen módulo unidad y son perpendiculares entre sí. En este sistema, los vectores unitarios son: $\vv[x]{u}, \vv[y]{u}, \vv[z]{u}$. 
+
+El vector $\vv[x]{u}$ es perpendicular a la superficie coordenada $x = \text{cte.}$, y apunta en la dirección creciente de $x$. Análogamente para $\vv[y]{u}$ y $\vv[z]{u}$. Los vectores unitarios cartesianos mantienen la orientación relativa en todos los puntos del espacio.
+
+El vector posición $\vv{r}$ se puede expresar como:
+\begin{equation}
+    \vv{r} = x \vv[x]{u} + y \vv[y]{u} + z \vv[z]{u}
+\end{equation}
+
+\subsubsection{Coordenadas cilíndricas}
+
+Recomendables para problemas con \textbf{simetría cilíndrica}. Los valores que pueden tomar las coordenadas son:
+\begin{equation}
+    \begin{aligned}
+        \rho &\in [0, +\infty) \\
+        \varphi &\in [0, 2\pi) \\
+        z &\in (-\infty, +\infty)
+    \end{aligned}
+\end{equation}
+
+\begin{itemize}
+    \item La coordenada $\rho$ es la distancia del punto al eje $z$.
+    \item La coordenada $\varphi$ es el ángulo que forma el vector posición con el eje $x$.
+    \item La coordenada $z$ es la distancia del punto al plano $xy$.
+\end{itemize}
+
+Los vectores unitarios cilíndricos son $\vv[\rho]{u}, \vv[\varphi]{u}, \vv[z]{u}$. El vector $\vv[\rho]{u}$ es perpendicular a la superficie coordenada $\rho = \text{cte.}$ (que es un cilindro), y apunta en la dirección creciente de $\rho$. El vector $\vv[\varphi]{u}$ es perpendicular a la superficie coordenada $\varphi = \text{cte.}$ (que es un plano perpendicular al eje $z$), y apunta en la dirección creciente de $\varphi$. El vector $\vv[z]{u}$ es perpendicular a la superficie coordenada $z = \text{cte.}$, y apunta en la dirección creciente de $z$.
+
+El vector posición $\vv{r}$ se puede expresar como:
+\begin{equation}
+    \vv{r} = \rho \vv[\rho]{u} + z \vv[z]{u}
+\end{equation}
+
+\subsubsection{Coordenadas esféricas}
+
+Recomendables para problemas con \textbf{simetría esférica}. Los valores que pueden tomar las coordenadas son:
+\begin{equation}
+    \begin{aligned}
+        r &\in [0, +\infty) \\
+        \theta &\in [0, \pi] \\
+        \varphi &\in [0, 2\pi)
+    \end{aligned}
+\end{equation}
+
+\begin{itemize}
+    \item La coordenada $r$ es la distancia del punto al origen.
+    \item La coordenada $\theta$ es el ángulo que forma el vector posición con el eje $z$.
+    \item La coordenada $\varphi$ es el ángulo que forma el proyección del vector posición en el plano $xy$ con el eje $x$.
+\end{itemize}
+
+Los vectores unitarios esféricos son $\vv[r]{u}, \vv[\theta]{u}, \vv[\varphi]{u}$. El vector $\vv[r]{u}$ es perpendicular a la superficie coordenada $r = \text{cte.}$ (que es una esfera), y apunta en la dirección creciente de $r$. El vector $\vv[\theta]{u}$ es perpendicular a la superficie coordenada $\theta = \text{cte.}$ (que es un cono), y apunta en la dirección creciente de $\theta$. El vector $\vv[\varphi]{u}$ es perpendicular a la superficie coordenada $\varphi = \text{cte.}$ (que es un plano perpendicular al eje $z$), y apunta en la dirección creciente de $\varphi$.
+
+El vector posición $\vv{r}$ se puede expresar como:
+\begin{equation}
+    \vv{r} = r \vv[r]{u}
+\end{equation}
+
+\subsection{Relación entre los sistemas de coordenadas}
+
+\subsubsection{Cartesianas y cilíndricas}
+
+\begin{equation}
+    \left\lbrace 
+    \begin{aligned}
+        x &= \rho \cos \varphi \\
+        y &= \rho \sin \varphi \\
+        z &= z
+    \end{aligned} \right. \qquad \qquad \left\lbrace 
+    \begin{aligned}
+        \rho &= \sqrt{x^2 + y^2} \\
+        \varphi &= \arctan \left( \frac{y}{x} \right) \\
+        z &= z
+    \end{aligned} \right.
+\end{equation}
+
+\subsubsection{Cilíndricas y esféricas}
+
+\begin{equation}
+    \left\lbrace 
+    \begin{aligned}
+        \rho &= r \sin \theta \\
+        \varphi &= \varphi \\
+        z &= r \cos \theta
+    \end{aligned} \right. \qquad \qquad \left\lbrace 
+    \begin{aligned}
+        r &= \sqrt{\rho^2 + z^2} \\
+        \theta &= \arctan \left( \frac{\rho}{z} \right) \\
+        \varphi &= \varphi
+    \end{aligned} \right.
+\end{equation}
+
+\subsubsection{Cartesianas y esféricas}
+
+\begin{equation}
+    \left\lbrace 
+    \begin{aligned}
+        x &= r \sin \theta \cos \varphi \\
+        y &= r \sin \theta \sin \varphi \\
+        z &= r \cos \theta
+    \end{aligned} \right. \qquad \qquad \left\lbrace 
+    \begin{aligned}
+        r &= \sqrt{x^2 + y^2 + z^2} \\
+        \theta &= \arctan \left( \frac{\sqrt{x^2 + y^2}}{z} \right) \\
+        \varphi &= \arctan \left( \frac{y}{x} \right)
+    \end{aligned} \right.
+\end{equation}
 
 
-
-\section{Operadores vectoriales}
 \section{Ondas acústicas planas}
 \section{Ondas acústicas esféricas}
 \section{Reflexión y refracción de ondas acústicas}
