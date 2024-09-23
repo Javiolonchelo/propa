@@ -2,11 +2,13 @@
 
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{multicol}
 % \usepackage{esvect}
 \usepackage{physics}
 \usepackage{parskip}
+\usepackage{esint}
 
 % Bold vectors
 \renewcommand{\vec}[1]{\mathbf{#1}}
@@ -64,6 +66,13 @@ Hay que hacer los ejercicios propuestos antes de que el profesor los resuelva en
         \item 9.10
     \end{itemize}
 \end{multicols}
+
+\subsection*{Tareas pendientes}
+
+\begin{itemize}
+    \item Relación entre vectores unitarios \textbf{sin mezclar coordenadas}. Es decir, un ejemplo:
+    \[ \frac{x}{\sqrt{x^2 + y^2}} \qquad \text{en lugar de} \qquad \cos \varphi \]
+\end{itemize}
 
 \newpage
 \section{Herramientas: operadores vectoriales}
@@ -209,6 +218,56 @@ El vector posición $\vv{r}$ se puede expresar como:
     \end{aligned} \right.
 \end{equation}
 
+\subsection{Operador, campo escalar, campo vectorial}
+Un operador es un ``objeto matemático'' que actúa sobre una función, transformándola. Sirve para estudiar las características de esa función.
+
+Un ejemplo sería el operador \textbf{derivada}. Si se aplica el operador derivada a una función.
+
+\begin{equation} \label{eq:ejemplo_operador_derivada}
+    \dv{\sen \left( x \right)}{x} = g(x)
+\end{equation}
+
+Un campo escalar es una función que asigna un valor escalar a cada punto del espacio. Es decir,
+
+\begin{equation} \label{eq:campo_escalar}
+    f(x, y, z) \longrightarrow \mathbb{R} 
+\end{equation}
+
+
+\subsection{Gradiente de un campo escalar}
+
+El \textbf{gradiente} es un operador que se aplica a un campo escalar y devuelve un campo vectorial, de tal forma que en cada punto hay un vector que apunta en la dirección de mayor crecimiento del campo escalar. Se denota mediante el operador nabla: $\grad$.
+
+\begin{align} \label{eq:gradiente}
+    \grad f &= \pdv{f}{x} \vv[x]{u} + \pdv{f}{y} \vv[y]{u} + \pdv{f}{z} \vv[z]{u}\\
+    \grad f &= \pdv{f}{r} \vv[r]{u} + \frac{1}{r} \pdv{f}{\varphi} \vv[\varphi]{u} + \pdv{f}{z} \vv[z]{u} \\
+    \grad f &= \pdv{f}{r} \vv[r]{u} + \frac{1}{r} \pdv{f}{\theta} \vv[\theta]{u} + \frac{1}{r \sin \theta} \pdv{f}{\varphi} \vv[\varphi]{u}
+\end{align}
+
+\subsubsection{Ejemplo}
+
+\begin{align*}
+    f \left( x,y,z \right) &= 3x^2 + y - \cos (z) \\
+    \grad f &= \pdv{f}{x} \vv[x]{u} + \pdv{f}{y} \vv[y]{u} + \pdv{f}{z} \vv[z]{u} \\
+     &= 6x \vv[x]{u} + \vv[y]{u} + \sin (z) \vv[z]{u}\\[10pt]
+    f \left( 1,1,\frac{\pi}{6} \right) &= 3 + 1 - \frac{\sqrt{3}}{2} = \frac{7-\sqrt{3}}{2}\\
+    \grad f \left( 1,1,\frac{\pi}{6} \right) &= 6 \vv[x]{u} + \vv[y]{u} + \frac{1}{2} \vv[z]{u}
+\end{align*}
+
+\subsection{Divergencia de un campo vectorial}
+El \textbf{operador divergencia} se aplica a un campo vectorial y devuelve un campo escalar. Se denota también mediante el operador nabla ($\grad$, aunque en \LaTeX el comando \verb|\div| lo asigna como $\div$ porque utiliza el producto escalar entre el operador gradiente y el campo vectorial. Se define como:
+
+\begin{equation} \label{eq:divergencia}
+    \div \vv{a} = \text{div} \, \vv{a} = \lim _{V\to 0} \frac{1}{V} \oiint _S \vv{a} \cdot \dd{\vv{S}}
+\end{equation}
+
+Si la divergencia es positiva ($\div \vv{a} > 0$), el campo vectorial diverge o emana del punto (fuente). Si la divergencia es negativa ($\div \vv{a} < 0$), el campo vectorial converge o se dirige al punto (sumidero). En lo diferentes sistemas de coordenadas, se puede calcular como:
+\begin{align}
+    a
+\end{align}
+
+\subsubsection{Teorema de Gauss o de la divergencia}
+\subsection{}
 
 \section{Ondas acústicas planas}
 \section{Ondas acústicas esféricas}
