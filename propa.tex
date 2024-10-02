@@ -3,13 +3,24 @@
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage[labelfont=bf]{caption}
 \usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor={red!50!black},
+    linkcolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+
 \usepackage{mathtools}
 \usepackage{multicol}
 % \usepackage{esvect}
 
 \usepackage{physics}
 \DeclareDocumentCommand\vnabla{}{\nabla}
+\usepackage{siunitx}
+\AtBeginDocument{\RenewCommandCopy{\qty}{\SI}}
 
 
 \usepackage{parskip}
@@ -332,7 +343,7 @@ Se escoge una curva cerrada $C$ y una superficie $S$ de forma arbitraria que con
 
 Para campos conservativos, el flujo del rotacional a través de una superficie cerrada es nulo. Por ello, este teorema puede ser útil para resolver 
 
-TODO: Repetir el 7 de las tareas de clase (hice mal un vector unitario).
+TODO Repetir el 7 de las tareas de clase (hice mal un vector unitario).
 
 \subsection{Laplaciano}
 
@@ -384,7 +395,7 @@ Y sabiendo que se trata del gradiente de un campo escalar, calcular su función 
 \end{split}
 \]
 
-TODO: Problema 5 de las tareas de clase
+TODO Problema 5 de las tareas de clase
 
 \subsection{Campo solenoidal}
 
@@ -399,11 +410,215 @@ Si un campo es solenoidal, este se puede expresar como el rotacional de otro cam
     \div \vv{a} = 0 \quad \Longleftrightarrow \quad \vv{a} = \curl \vv{A}
 \end{equation}
 
-TODO: Comprobar cálculo de la función potencial
-TODO: Problemas 6 y 11 de las tareas de clase.
-TODO: Comprobar que los ejercicios anteriores están bien (ver fotos)
+TODO Comprobar cálculo de la función potencial
+TODO Problemas 6 y 11 de las tareas de clase.
+TODO Comprobar que los ejercicios anteriores están bien (ver fotos)
 
-\section{Ondas acústicas planas}    
+\section{Ondas acústicas planas}
+
+\subsection{Notación compleja}
+
+Una función de onda general se expresa en notación armónica como:
+
+\begin{equation} \label{eq:onda_general}
+    \Psi (x,t) = \Psi _0 \cos (\omega t -kx + \varphi)
+\end{equation}
+
+La notación armónica, que utiliza las funciones seno y coseno, dificulta cierto tipo de operaciones matemáticas. Por ello, se busca 
+
+\[ \Psi _0 e^{i \left( \omega t - kx + \varphi \right)} = \Psi _0 \left[ \cos \left( \omega t - kx + \varphi \right) + i \sen \left( \omega t - kx + \varphi \right) \right] \]
+
+La notación exponencial utiliza la ecuación de Euler, que relaciona las funciones trigonométricas con las funciones exponenciales, \textbf{ignorando} que estamos cogiendo la parte real. 
+\begin{equation} \label{eq:notacion_compleja}
+    \Psi (x,t) = \Re \left\lbrace \Psi _0 e^{i \left( \omega t - kx + \varphi \right)} \right\rbrace \quad \Longrightarrow \quad \Psi (x,t) =  \Psi _0 e^{i \omega t - kx + \varphi}
+\end{equation}
+
+Las operaciones como derivación e integración se simplifican con la notación compleja.
+
+\begin{equation} \label{eq:derivacion_notacion_compleja}
+    \frac{\dd ^n t}{\dd t ^n} = \left( i \omega \right) ^n \Psi (x, t)
+\end{equation}
+
+\begin{equation} \label{eq:integracion_notacion_compleja}
+    \int \Psi (x,t) \dd{t} = \frac{1}{i \omega}\Psi (x,t) + C
+\end{equation}
+
+En el plano complejo, un número complejo $z$ se expresa como:
+\[ z = a + ib = r e^{i \varphi} \]
+
+Donde $a$ es la parte real, $b$ es la parte imaginaria, $r$ es el módulo y $\varphi$ es el argumento. La relación entre estos parámetros es la siguiente:
+
+\begin{align*}
+    r &= \sqrt{a^2 + b^2} & a &= r \cos \varphi \\
+    \varphi &= \arctan \left( \frac{b}{a} \right) & b &= r \sen \varphi
+\end{align*}
+
+Si tenemos una función de onda tal que $\Psi (x,t) = 2i e^{i \left( \omega t - kx + \varphi \right)}$, deberemos transformarlo a notación compleja de la siguiente forma:
+
+\[ \Psi (x,t) = 2i e^{i \left( \omega t - kx + \varphi \right)} =2 e^{i \frac{\pi}{2} } e^{i \left( \omega t - kx + \varphi \right)} = 2 e^{i \left( \omega t - kx + \varphi + \frac{\pi}{2} \right)} \]
+
+Por otro lado, si tenemos una función de onda tal que $\Psi (x,t) = a e^{i \left( \omega t - kx \right)} + b e^{i \left( \omega t + kx + \varphi \right)}$, deberemos transformarlo a notación armónica.
+
+\subsection{Acústica lineal}
+
+El rango de frecuencias audible es de \qty{20}{\Hz} a \qty{20}{\kHz}. Si la frecuencia de una onda acústica es menor a \qty{20}{\Hz} o mayor a \qty{20}{\kHz}, se denominará \textbf{infrasónica} o \textbf{ultrasónica}, respectivamente.
+
+Las ondas acústicas son ondas mecánicas. Esto quiere decir que necesitan de un medio para transmitirse. Entendiendo el aire como medio, cada partícula de este fluido se situa en equilibrio en un punto fijo $x_0$ efectuando un Movimiento Armónico Simple (MAS) alrededor de este punto.
+
+TODO Añadir paquete para términos de glosario.
+
+\begin{align} \label{eq:presion_acustica}
+    p(\vv{r}, t) &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi\right)}\\
+    \vv{\xi} (\vv{r}, t) &= \vv{\xi} _0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi - \frac{\pi}{2}\right) }\vv[k]{u}\\
+    \vv[p]{v} (\vv{r}, t) &= \vv{v} _0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi\right) }\vv[k]{u}
+\end{align}
+
+Donde:
+\begin{itemize}
+    \item $\xi$ es el desplazamiento de la partícula con respecto a su posición de equilibrio.
+    \item $\vv[p]{v}$ es la velocidad vibratoria de la partícula.
+\end{itemize}
+
+Función de onda genérica que puede representar cualquiera de las tres anteriores.
+
+\[ \Psi (\vv{r}, t) = \Psi _0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi\right)} \]
+
+Donde:
+\begin{align*}
+    \Psi _0 &\equiv \text{Amplitud de la onda, y es \textbf{constante para ondas planas}.} \\
+    \omega &\equiv \text{Frecuencia angular.} \\
+    \vv{k} &\equiv \text{Vector de onda.} \\
+    \vv{r} &\equiv \text{Vector posición.} \\
+\end{align*}
+
+Los vectores $\vv{k}$ y $\vv{r}$ representan:
+\begin{align*}
+    \vv{k} & = k_x \vv[x]{u} + k_y \vv[y]{u} + k_z \vv[z]{u} \\
+    \vv{r} & = x \vv[x]{u} + y \vv[y]{u} + z \vv[z]{u}
+\end{align*}
+
+Por lo tanto, el producto escalar que aparece en el exponente de la función de onda será:
+\[ \vv{k} \cdot \vv{r} = k_x x + k_y y + k_z z \]
+
+Por ejemplo, siendo una función de onda $\Psi (x,t) = 3 e^{i \left( 3000t - 2x + 3y + \frac{\pi}{3}\right)}$, sus parámetros son:
+\begin{itemize}
+    \item Amplitud: $ \Psi_0 = 3$
+    \item Frecuencia angular: $\omega = 3000$
+    \item Vector de onda: $\vv{k} = -2 \vv[x]{u} + 3 \vv[y]{u}$
+    \item Fase: $\varphi = \frac{\pi}{3}$
+\end{itemize}
+
+TODO Ejercicio: Identificar parámetros de las siguientes funciones de onda.
+
+\begin{itemize}
+    \item $\Psi(\vv{r, t}) = - \Psi_0 e^{i \left( \omega t - kz + \varphi \right)}$
+    \item $\Psi(\vv{r, t}) = (1-i) \Psi_0 e^{i \left( \omega t - kx + \varphi \right)}$
+    \item $\Psi(\vv{r, t}) = i \Psi_0 e^{i \left( \omega t - ky + \varphi \right)}$
+\end{itemize}
+
+Las ondas acústicas son un tipo de \textbf{onda longitudinal}. Esto quiere decir que la dirección de propagación de la onda es la misma que la dirección de oscilación de las partículas del medio. 
+
+La \textbf{ecuación de estado} dice:
+\begin{equation} \label{eq:ecuacion_estado}
+    p = B S
+\end{equation}
+
+La ecuación de continuidad dice:
+
+La ecuación de Euler es muy importante:
+
+\begin{equation} \label{eq:ecuacion_euler}
+    \color{orange}
+    \grad p = - \rho_0 \pdv{\vv{v_p}}{t}
+\end{equation}
+
+Donde $\rho_0$ es la densidad de equilibrio del fluido, y $\vv{v_p}$ es la velocidad de las partículas del fluido.
+
+\[ \laplacian p = \frac{\rho_0}{B} \pdv[2]{p}{t} \]
+
+La velocidad de propagación de la onda se obtiene como:
+
+\begin{equation} \label{eq:velocidad_del_medio}
+    \vv{v_s} = \sqrt{\frac{B}{\rho_0}}
+\end{equation}
+
+Por lo tanto, la velocidad de propagación de la onda acústica \textbf{depende el medio}. Esto es importante al relacionar la velocidad de propagación con la longitud de onda y la frecuencia:
+
+\begin{equation} \label{eq:velocidad_longitud_frecuencia}
+    v_s = \lambda f = \frac{\omega }{k}
+\end{equation}
+
+Si el medio no varía, $v$ es constante. Por lo tanto, si la longitud de onda aumenta, la frecuencia disminuye y viceversa.
+
+\begin{align*}
+    p(\vv{r}, t) &= p_0 \cos \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)\\ 
+    &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)}
+\end{align*}
+
+La \textbf{longitud de onda} $\lambda$ es la distancia entre dos puntos de la onda que están en fase. Se relaciona con el vector de onda $\vv{k}$ como:
+
+\begin{equation} \label{eq:longitud_onda}
+    k = \abs{\vv{k}} = \frac{2\pi}{\lambda}
+\end{equation}
+
+
+Importante (cae en exámenes). Partiendo de la función de onda de la presión acústica, podemos llegar a la función de onda de la velocidad de las partículas mediante la ecuación de Euler. 
+
+\begin{align*}
+    \grad p &= - \rho_0 \pdv{\vv{v_p}}{t}\\
+    - \frac{1}{\rho_0} \grad p &= \pdv{\vv{v_p}}{t}\\
+    \vv[p]{v} = - \frac{1}{\rho_0} \int \grad p \dd{t} &= - \frac{1}{\rho_0} \int \grad p (\vv{r}, t) \dd{t}
+\end{align*}
+
+Usaremos coordenadas cartesianas porque se trata de ondas planas. Recordamos que para simetrías planas las coordenadas cartesianas facilitan los cálculos.
+
+\begin{align*}
+    p(\vv{r}, t) &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)}\\
+    p(\vv{r}, t) &= p_0 e^{i \left( \omega t - k_x x - k_y y - k_z z + \varphi \right)}\\[15pt]
+    \grad p &= \pdv{p}{x} \vv[x]{u} + \pdv{p}{y} \vv[y]{u} + \pdv{p}{z} \vv[z]{u} \\[15pt]
+    \pdv{p_x}{x} &= \pdv{}{x} \left\lbrace p_0 e^{i\left(  \omega t - k_x x - k_y y - k_z z + \varphi \right)} \right\rbrace = - i k_x p_0 \sen \left( \omega t - kx + \varphi \right)
+\end{align*}
+
+TODO Continuar donde aparece la marca $\boxed{\ast\triangle}$
+
+El vector de onda $\vv{k}$ se expresa como:
+\[ \vv{k} = k_x \vv[x]{u} + k_y \vv[y]{u} + k_z \vv[z]{u} = \abs{\vv{k}} \vv[k]{u} \]
+
+Por lo tanto, la direcciń de propagación de la onda será:
+\[ \vv[k]{u} = \frac{\vv{k}}{\abs{\vv{k}}} = \frac{k_x \vv[x]{u} + k_y \vv[y]{u} + k_z \vv[z]{u}}{\abs{\vv{k}}} \]
+
+Las amplitudes $p_0, \xi_0, v_0$ son constantes. La presión y la velocidad están en fase, mientras que el desplazamiento está retrasado $\frac{\pi}{2}$.
+
+
+\subsection{Ecuación de onda. Solución armónica}
+
+TODO Averiguar qué va en esta parte de todo lo que he copiado
+
+
+\subsection{Densidad de energía. Intensidad acústica}
+
+La intensidad acústica se define como la  cantidad de energía que fluye por unidad de tiempo y por unidad de superficie perpendicular a la dirección de propagación de la onda.
+\begin{equation} \label{eq:intensidad_acustica}
+    I = \frac{P}{S} \qquad \left[ I \right] = \si{\watt\per\meter\squared}
+\end{equation}
+
+La intensidad instantánea se define como el producto de la presión acústica por la velocidad de las partículas del medio.
+\begin{equation} \label{eq:intensidad_acustica_instantanea}
+    I _{\text{inst.}} = p \cdot v_p
+\end{equation}
+
+Si desarrollamos:
+\begin{align*}
+    I _{\text{inst.}} = p \cdot v_p &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \cdot v_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \\ 
+    &= p_0 \cos \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \cdot v_0 \cos \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \\
+\end{align*}
+
+La \textbf{intensidad de la onda acústica} se define como el valor medio de la intensidad instantánea.
+
+\begin{equation} \label{eq:intensidad_onda}
+    I = \left\langle I _{\text{inst.}} \right\rangle = \left\langle p \cdot v_p \right\rangle = \frac{1}{T} \int_{0}^{T} p \cdot v_p \dd{t} = \int_{0}^{T} p_0 v_0 \cos^2 \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \dd{t}
+\end{equation}
+
 \section{Ondas acústicas esféricas}
 \section{Reflexión y refracción de ondas acústicas}
 \section{Ecuaciones de Maxwell. Ecuaciones de onda. Energía}
@@ -427,5 +642,7 @@ Sea el campo vectorial,
      \item Calcular el flujo neto de $\vv{a}$ a través del cubo $0<x,y,z<1$. \textbf{Solución:} Usando Teorema de Gauss \autoref{eq:teorema_gauss} el resultado es 8.
      \item Determinar la circulación de $\vv{a}$ a lo largo del perímetro de la cara del cubo definida por $z=0$ y por $0<x,y<1$. \textbf{Solución:} Usando Teorema de Stokes \autoref{eq:teorema_stokes}, el resultado es 0.
 \end{enumerate}
+
+
 
 \end{document}
