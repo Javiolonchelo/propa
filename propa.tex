@@ -582,6 +582,18 @@ Usaremos coordenadas cartesianas porque se trata de ondas planas. Recordamos que
 
 TODO Continuar donde aparece la marca $\boxed{\ast\triangle}$
 
+\begin{align*}
+    \grad p &= - i k_x p_0 e ^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \\ 
+    \vv[p]{v} (\vv{r}, t) &= \frac{i p_0 \vv{k}}{\rho_0} \int_{0}^{t} e ^{i \left( \omega t ' - \vv{k} \cdot \vv{r} + \varphi \right)} \dd{t'}
+\end{align*}
+
+La variable $t'$ es una variable muda que se utiliza para distinguir la variable de integración de los límites de integración.
+
+\begin{align*}
+    \vv[p]{v} (\vv{r}, t) &= \frac{i p_0 \vv{k}}{\rho_0} \cdot \frac{1}{i \omega} \biggl. e ^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)}  \biggr\vert _{0}^{t}\\ 
+    &= \frac{\vv{k}}{\rho_0 \omega} p_0 e ^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi - \frac{\pi}{2} \right)}\\
+\end{align*}
+
 El vector de onda $\vv{k}$ se expresa como:
 \[ \vv{k} = k_x \vv[x]{u} + k_y \vv[y]{u} + k_z \vv[z]{u} = \abs{\vv{k}} \vv[k]{u} \]
 
