@@ -3,6 +3,7 @@
 \usepackage[spanish]{babel}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{cancel}
 \usepackage[labelfont=bf]{caption}
 \usepackage{hyperref}
 \hypersetup{
@@ -21,7 +22,7 @@
 \DeclareDocumentCommand\vnabla{}{\nabla}
 \usepackage{siunitx}
 \AtBeginDocument{\RenewCommandCopy{\qty}{\SI}}
-
+\DeclareSIUnit \rayl {rayl}
 
 \usepackage{parskip}
 \usepackage{esint}
@@ -604,20 +605,55 @@ La intensidad acústica se define como la  cantidad de energía que fluye por un
 
 La intensidad instantánea se define como el producto de la presión acústica por la velocidad de las partículas del medio.
 \begin{equation} \label{eq:intensidad_acustica_instantanea}
-    I _{\text{inst.}} = p \cdot v_p
+    I _{\text{ins}} = p \cdot v_p
 \end{equation}
 
 Si desarrollamos:
 \begin{align*}
-    I _{\text{inst.}} = p \cdot v_p &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \cdot v_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \\ 
+    I _{\text{ins}} = p \cdot v_p &= p_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \cdot v_0 e^{i \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right)} \\ 
     &= p_0 \cos \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \cdot v_0 \cos \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \\
 \end{align*}
 
 La \textbf{intensidad de la onda acústica} se define como el valor medio de la intensidad instantánea.
 
 \begin{equation} \label{eq:intensidad_onda}
-    I = \left\langle I _{\text{inst.}} \right\rangle = \left\langle p \cdot v_p \right\rangle = \frac{1}{T} \int_{0}^{T} p \cdot v_p \dd{t} = \int_{0}^{T} p_0 v_0 \cos^2 \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \dd{t}
+    \begin{split}
+        I = \left\langle I _{\text{ins}} \right\rangle = \left\langle p \cdot v_p \right\rangle = \frac{1}{T} \int_{0}^{T} p \cdot v_p \dd{t}  \\= \frac{1}{T} \int_{0}^{T} p_0 v_0 \cos^2 \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \dd{t} \\= \frac{\rho_0 v_0}{T} \int_{0}^{T} \frac{1 + \cancelto{0}{\cos \left[ 2 \left( \omega t - \vv{k} \cdot \vv{r} + \varphi \right) \right]} }{2} \dd{t} \\= \frac{\rho_0 v_0}{T} \int_{0}^{T} \frac{1}{2} \dd{t} = \frac{\rho_0 v_0}{2}
+    \end{split}
 \end{equation}
+
+Por lo tanto,
+
+\begin{equation} \label{eq:intensidad_onda_final}
+    I = \frac{1}{2} \rho_0 v_s \omega ^2 \xi _0 ^2
+\end{equation}
+
+\[ S = 10 \log \left( \frac{I}{I_0}  \right) \unit{\dB}  \]
+
+Donde $I_0$ es la intensidad acústica de referencia, que corresponde al umbral de audición del ser humano, y su valor es $I_0 = \qty{e-12}{\watt\per \meter\squared}$.
+
+\[ S_1 - S_2 = 10 \log \left( \frac{I_1}{I_2} \right) \unit{\dB} \]
+
+La \textbf{impedancia característica del medio} se define como:
+\begin{equation} \label{eq:impedancia_caracteristica}
+    Z_m = \rho_0 v_s
+\end{equation}
+
+La \textbf{impedancia aćustica} es el cociente entre la presión acústica y la velocidad de las partículas del medio.
+\begin{equation} \label{eq:impedancia_acustica} \color{orange}
+    Z = \frac{p}{v_p}
+\end{equation}
+
+Las unidades de la impedancia acústica y de la impedancia característica del medio son los Rayleighs (\unit{\rayl}).
+
+\begin{equation} \label{eq:interferencias}
+    I_T(P) = I_1 + I_2 + 2 \sqrt{I_1I_2}\cos \left[ \delta (P) \right]
+\end{equation}
+
+El valor máximo sucede cuando el coseno es 1, por lo tanto el valor máximo de la intensidad total es:
+\[ I_{\text{max}}(P) = \left( \sqrt{I_1} + \sqrt{I_2} \right) ^2 \]
+
+TODO: Problemas 2.1 y 2.4
 
 \section{Ondas acústicas esféricas}
 \section{Reflexión y refracción de ondas acústicas}
